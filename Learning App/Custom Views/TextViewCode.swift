@@ -18,7 +18,8 @@ struct TextViewCode: UIViewRepresentable {
     }
     
     func updateUIView(_ textView: UITextView, context: Context) {
-        
+        textView.attributedText = model.codeText
+        textView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
     }
 }
 
