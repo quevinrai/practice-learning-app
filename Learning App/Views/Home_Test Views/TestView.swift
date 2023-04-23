@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TestView: View {
+    @EnvironmentObject var model: ContentModel
+    
     var body: some View {
         Text("Test View")
     }
@@ -16,5 +18,6 @@ struct TestView: View {
 struct TestView_Previews: PreviewProvider {
     static var previews: some View {
         TestView()
+            .environmentObject(ContentModel())
     }
 }

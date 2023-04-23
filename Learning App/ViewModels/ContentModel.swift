@@ -21,6 +21,8 @@ class ContentModel: ObservableObject {
     var styleData: Data?
     
     // MARK: - Methods
+    
+    // Function: Get Local JSON Data
     func getLocalData() {
         let jsonUrl = Bundle.main.url(forResource: "data", withExtension: "json")
         
@@ -52,6 +54,23 @@ class ContentModel: ObservableObject {
                 print(error)
             }
         }
+    }
+    
+    // Function: Add HTML & CSS Styling
+    private func addStyling(_ htmlString: String) -> NSAttributedString {
+        var resultString = NSAttributedString()
+        var data = Data()
+        
+        if let styleData = self.styleData {
+            data.append(styleData)
+            data.append(Data(htmlString.utf8))
+            
+            if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                resultString = attributedString
+            }
+        }
+        
+        return resultString
     }
     
     //MARK: - Init
