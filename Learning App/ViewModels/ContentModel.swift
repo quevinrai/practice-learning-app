@@ -8,17 +8,35 @@
 import Foundation
 import SwiftUI
 
-enum AppView {
-    case contentView, contentViewDetail, testView, testViewResult
+enum AppView: Hashable {
+    case contentView(Int), contentViewDetail(Int), testView(Int), testViewResult(Int)
 }
 
 class ContentModel: ObservableObject {
     // MARK: - Properties
     @Published var modules = [Module]()
-    @Published var path = [AppView]()
+    @Published var path = NavigationPath()
+    
+    @Published var moduleType: String?
+    @Published var currentContentSelected: Int?
+    @Published var currentTestSelected: Int?
+    
+    @Published var currentModule: Module?
+    var currentModuleIndex = 0
+    
+    @Published var currentLesson: Lesson?
+    var currentLessonIndex = 0
+    
+    @Published var currentQuestion: Question?
+    var currentQuestionIndex = 0
     
     @Published var codeText = NSAttributedString()
     var styleData: Data?
+    
+    //MARK: - Init
+    init() {
+        getLocalData()
+    }
     
     // MARK: - Methods
     
@@ -56,6 +74,11 @@ class ContentModel: ObservableObject {
         }
     }
     
+    // Function: Begin Lesson
+    func beginLesson() {
+        
+    }
+    
     // Function: Add HTML & CSS Styling
     private func addStyling(_ htmlString: String) -> NSAttributedString {
         var resultString = NSAttributedString()
@@ -71,10 +94,5 @@ class ContentModel: ObservableObject {
         }
         
         return resultString
-    }
-    
-    //MARK: - Init
-    init() {
-        getLocalData()
     }
 }

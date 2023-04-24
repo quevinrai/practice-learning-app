@@ -35,10 +35,10 @@ struct Test: Identifiable, Decodable {
     var image: String = "testSwift"
     var time: String = "[Test Time]"
     var description: String = "[Test Description]"
-    var questions: [Questions] = [Questions()]
+    var questions: [Question] = [Question()]
 }
 
-struct Questions: Identifiable, Decodable {
+struct Question: Identifiable, Decodable {
     var id: Int = 0
     var content: String = "[Test > Content HTML]"
     var correctIndex: Int = 0
