@@ -21,34 +21,11 @@ struct ContentView: View {
         }
     }
     
-    
-    
     var body: some View {
         VStack(alignment: .leading) {
             ScrollView {
                 ForEach(module.content.lessons) { lesson in
-                    Group {
-                        NavigationLink(value: AppView.contentViewDetail(lesson.id)) {
-                            ZStack(alignment: .leading) {
-                                RectangleCard()
-                                
-                                HStack(spacing: 30) {
-                                    Text(String(lesson.id + 1))
-                                        .padding(.leading)
-                                        .padding(.vertical, 20)
-                                    
-                                    VStack(alignment: .leading) {
-                                        Text(lesson.title)
-                                            .bold()
-                                        Text(lesson.duration)
-                                            .foregroundColor(.gray)
-                                    }
-                                }
-                                .foregroundColor(.black)
-                            }
-                            .padding(.vertical, 5)
-                        }
-                    }
+                    ContentViewRow(lesson: lesson)
                 }
                 .padding()
             }

@@ -8,20 +8,10 @@
 import SwiftUI
 
 struct ContentViewRow: View {
-    @EnvironmentObject var model: ContentModel
-    
-    var lesson: Lesson {
-        let moduleIndex = model.currentModuleIndex
-        let lessonIndex = model.currentLessonIndex
-
-        return model.modules[moduleIndex].content.lessons[lessonIndex]
-    }
+    var lesson: Lesson
     
     var body: some View {
-        Button {
-            model.currentLessonIndex = lesson.id
-//            model.path.append(AppView.contentViewDetail)
-        } label: {
+        NavigationLink(value: AppView.contentViewDetail(lesson.id)) {
             ZStack(alignment: .leading) {
                 RectangleCard()
                 
@@ -46,7 +36,7 @@ struct ContentViewRow: View {
 
 struct ContentViewRow_Previews: PreviewProvider {
     static var previews: some View {
-        ContentViewRow()
+        ContentViewRow(lesson: Lesson())
             .environmentObject(ContentModel())
     }
 }
