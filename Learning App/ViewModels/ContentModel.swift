@@ -17,7 +17,6 @@ class ContentModel: ObservableObject {
     @Published var modules = [Module]()
     @Published var path = NavigationPath()
     
-    @Published var moduleType: String?
     @Published var currentContentSelected: Int?
     @Published var currentTestSelected: Int?
     
@@ -36,6 +35,7 @@ class ContentModel: ObservableObject {
     //MARK: - Init
     init() {
         getLocalData()
+        getRemoteData()
     }
     
     // MARK: - Methods
@@ -74,9 +74,83 @@ class ContentModel: ObservableObject {
         }
     }
     
-    // Function: Begin Lesson
-    func beginLesson() {
+    // Function: Get Remote JSON Data
+    func getRemoteData() {
+        let urlString = "https://quevinrai.github.io/learningapp-data/data2.json"
         
+        let url = URL(string: urlString)
+        
+        if let url = url {
+            let request = URLRequest(url: url)
+            
+            let session = URLSession.shared
+            
+            let dataTask = session.dataTask(with: request) { data, response, error in
+                guard error == nil else {
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    
+                    let modules = try decoder.decode([Module].self, from: data!)
+                    
+                    DispatchQueue.main.async {
+                        self.modules += modules
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+            
+            dataTask.resume()
+        }
+    }
+    
+    // Function: Begin Module
+    func beginModule(_ moduleId: Int) {
+        currentModuleIndex = modules.firstIndex(where: { $0.id == moduleId }) ?? 0
+        
+        currentModule = modules[currentModuleIndex]
+    }
+    
+    // Function: Begin Lesson
+    func beginLesson(_ lessonId: Int) {
+        currentLessonIndex = currentModule?.content.lessons.firstIndex(where: { $0.id == lessonId }) ?? 0
+        currentLesson = currentModule?.content.lessons[currentLessonIndex]
+        
+        codeText = addStyling(currentLesson?.explanation ?? "")
+    }
+    
+    // Function: Check if there's a next lesson
+    func hasNextLesson() -> Bool {
+        guard currentModule != nil else {
+            return false
+        }
+        
+        return (currentLessonIndex + 1 < currentModule!.content.lessons.count)
+    }
+    
+    // Function: Advance to the next lesson
+    func nextLesson() {
+        currentLessonIndex += 1
+        
+        if currentLessonIndex < currentModule!.content.lessons.count {
+            currentLesson = currentModule!.content.lessons[currentLessonIndex]
+            codeText = addStyling(currentLesson!.explanation)
+        }
+        else {
+            currentLessonIndex = 0
+            currentLesson = nil
+        }
+    }
+    
+    // Function: Begin Test
+    func beginTest(_ questionId: Int) {
+        currentQuestionIndex = currentModule?.test.questions.firstIndex(where: { $0.id == questionId}) ?? 0
+        currentQuestion = currentModule?.test.questions[currentQuestionIndex]
+        
+        codeText = addStyling(currentQuestion?.content ?? "")
     }
     
     // Function: Add HTML & CSS Styling

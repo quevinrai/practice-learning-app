@@ -24,6 +24,7 @@
 		DE99467029F47B3400586A23 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99466F29F47B3400586A23 /* TestView.swift */; };
 		DE99467229F47B4700586A23 /* TestViewResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99467129F47B4700586A23 /* TestViewResult.swift */; };
 		DE99467429F47BBA00586A23 /* TextViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99467329F47BBA00586A23 /* TextViewCode.swift */; };
+		DE99467629F8470300586A23 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99467529F8470300586A23 /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		DE99466F29F47B3400586A23 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		DE99467129F47B4700586A23 /* TestViewResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewResult.swift; sourceTree = "<group>"; };
 		DE99467329F47BBA00586A23 /* TextViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCode.swift; sourceTree = "<group>"; };
+		DE99467529F8470300586A23 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 			children = (
 				DE99466329F3752300586A23 /* RectangleCard.swift */,
 				DE99467329F47BBA00586A23 /* TextViewCode.swift */,
+				DE99467529F8470300586A23 /* CustomButton.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				DE99467229F47B4700586A23 /* TestViewResult.swift in Sources */,
 				DE99466029F22D9500586A23 /* Constants.swift in Sources */,
 				DE99467029F47B3400586A23 /* TestView.swift in Sources */,
+				DE99467629F8470300586A23 /* CustomButton.swift in Sources */,
 				DE99466A29F47B0400586A23 /* ContentView.swift in Sources */,
 				DE99465929F22CD600586A23 /* Models.swift in Sources */,
 				DE99465B29F22CED00586A23 /* ContentModel.swift in Sources */,

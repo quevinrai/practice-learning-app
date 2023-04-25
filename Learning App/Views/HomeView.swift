@@ -22,12 +22,14 @@ struct HomeView: View {
                 ScrollView {
                     LazyVStack(spacing: 20) {
                         ForEach(model.modules) { module in
-                            NavigationLink(value: AppView.contentView(module.id)) {
-                                HomeViewRow(image: module.content.image, title: "Learn \(module.category)", description: module.content.description, count: "\(module.content.lessons.count) Lessons", time: module.content.time)
-                            }
-                            
-                            NavigationLink(value: AppView.testView(module.id)) {
-                                HomeViewRow(image: module.test.image, title: "\(module.category) Test", description: module.test.description, count: "\(module.test.questions.count) Lessons", time: module.test.time)
+                            VStack(spacing: 10){
+                                NavigationLink(value: AppView.contentView(module.id)) {
+                                    HomeViewRow(image: module.content.image, title: "Learn \(module.category)", description: module.content.description, count: "\(module.content.lessons.count) Lessons", time: module.content.time)
+                                }
+                                
+                                NavigationLink(value: AppView.testView(module.id)) {
+                                    HomeViewRow(image: module.test.image, title: "\(module.category) Test", description: module.test.description, count: "\(module.test.questions.count) Lessons", time: module.test.time)
+                                }
                             }
                         }
                         .foregroundColor(.black)

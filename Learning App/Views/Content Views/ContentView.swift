@@ -11,26 +11,21 @@ struct ContentView: View {
     @EnvironmentObject var model: ContentModel
     var moduleId: Int?
     
-    var module: Module {
-        if let moduleId = moduleId {
-            model.currentModuleIndex = moduleId
-            return model.modules[moduleId]
-        }
-        else {
-            return Module()
-        }
-    }
-    
     var body: some View {
         VStack(alignment: .leading) {
-            ScrollView {
-                ForEach(module.content.lessons) { lesson in
-                    ContentViewRow(lesson: lesson)
+            if let currentModule = model.currentModule {
+                ScrollView {
+                    ForEach(currentModule.content.lessons) { lesson in
+                        ContentViewRow(lesson: lesson)
+                    }
+                    .padding()
                 }
-                .padding()
             }
         }
         .navigationTitle("Learn Swift")
+        .onAppear {
+            model.beginModule(moduleId ?? 0)
+        }
     }
 }
 

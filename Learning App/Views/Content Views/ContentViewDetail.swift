@@ -6,28 +6,38 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct ContentViewDetail: View {
     @EnvironmentObject var model: ContentModel
-    
     var lessonId: Int?
     
-    var lesson: Lesson {
-        if let lessonId = lessonId {
-            model.currentLessonIndex = lessonId
-
-            return model.modules[model.currentModuleIndex].content.lessons[model.currentLessonIndex]
-        }
-        else {
-            return Lesson()
-        }
-    }
-    
     var body: some View {
+        let url = URL(string: Constants.videoHostUrl + (model.currentLesson?.video ?? Lesson().video))
+        
         VStack {
-            Text("Current Lesson Index: \(model.currentLessonIndex)")
+            if let url = url {
+                VideoPlayer(player: AVPlayer(url: url))
+                    .cornerRadius(10)
+            }
+            
+            TextViewCode()
+            
+            
+            if model.hasNextLesson() {
+
+                CustomButton(executeButtonAction: {model.nextLesson()}, customText: "Next Lesson: \(model.currentModule?.content.lessons[model.currentLessonIndex + 1].title ?? "")")
+            }
+            else {
+
+                CustomButton(executeButtonAction: {model.path.removeLast(model.path.count)}, customText: "Complete")
+            }
         }
-        .navigationTitle(lesson.title)
+        .padding()
+        .navigationTitle(model.currentLesson?.title ?? Lesson().title)
+        .onAppear {
+            model.beginLesson(lessonId ?? 0)
+        }
     }
 }
 
