@@ -26,11 +26,11 @@ struct ContentViewDetail: View {
             
             if model.hasNextLesson() {
 
-                CustomButton(executeButtonAction: {model.nextLesson()}, customText: "Next Lesson: \(model.currentModule?.content.lessons[model.currentLessonIndex + 1].title ?? "")")
+                CustomButton(executeButtonAction: {model.nextLesson()}, customText: "Next Lesson: \(model.currentModule?.content.lessons[model.currentLessonIndex + 1].title ?? "")", bgColor: .green, txtColor: .white)
             }
             else {
 
-                CustomButton(executeButtonAction: {model.path.removeLast(model.path.count)}, customText: "Complete")
+                CustomButton(executeButtonAction: {model.path.removeLast(model.path.count)}, customText: "Complete", bgColor: .green, txtColor: .white)
             }
         }
         .padding()
