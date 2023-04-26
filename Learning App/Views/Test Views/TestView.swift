@@ -25,34 +25,42 @@ struct TestView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Question \(model.currentQuestionIndex + 1) of \(totalQuestions)")
-            
-            TextViewCode()
-            
-            if let question = model.currentQuestion {
-                ForEach(0..<question.answers.count, id: \.self) { index in
-                    CustomButton(executeButtonAction: {selectedAnswerIndex = index}, customText: model.currentQuestion?.answers[index] ?? "", bgColor: getBgColor(selectedAnswerIndex ?? 0, index), txtColor: .black)
-                        .fontWeight(.thin)
-                        .disabled(isSubmitted)
+        if showResults == false {
+            VStack(alignment: .leading) {
+                Text("Question \(model.currentQuestionIndex + 1) of \(totalQuestions)")
+                
+                TextViewCode()
+                
+                if let question = model.currentQuestion {
+                    ForEach(0..<question.answers.count, id: \.self) { index in
+                        CustomButton(executeButtonAction: {selectedAnswerIndex = index}, customText: model.currentQuestion?.answers[index] ?? "", bgColor: getBgColor(selectedAnswerIndex ?? 0, index), txtColor: .black)
+                            .fontWeight(.thin)
+                            .disabled(isSubmitted)
+                    }
                 }
+                
+                CustomButton(executeButtonAction: {checkSubmitStatus(selectedAnswerIndex ?? 0)}, customText: "Submit", bgColor: .green, txtColor: .white)
+                    .padding(.top, 20)
+                    .bold()
             }
-            
-            CustomButton(executeButtonAction: {checkSubmitStatus(selectedAnswerIndex ?? 0)}, customText: "Submit", bgColor: .green, txtColor: .white)
-                .padding(.top, 20)
-                .bold()
+            .padding()
+            .navigationTitle("\(model.currentModule?.category ?? "") Test")
+            .onAppear {
+                model.beginModule(moduleId ?? 0)
+                model.beginTest(questionId)
+            }
         }
-        .padding()
-        .navigationTitle("\(model.currentModule?.category ?? "") Test")
-        .onAppear {
-            model.beginModule(moduleId ?? 0)
-            model.beginTest(questionId)
+        else if showResults == true {
+            TestViewResult(correctAnswersCount: correctAnswersCount)
+        }
+        else {
+            ProgressView()
         }
     }
     
     func getBgColor(_ selectedAnswerIndex: Int, _ index: Int) -> Color {
         if isSubmitted == false {
-            if index == selectedAnswerIndex {
+            if index == selectedAnswerIndex && self.selectedAnswerIndex != nil {
                 return .gray
             }
             else {

@@ -43,7 +43,7 @@ struct HomeView: View {
                     case let .contentView(moduleId): ContentView(moduleId: moduleId)
                     case let .contentViewDetail(lessonId): ContentViewDetail(lessonId: lessonId)
                     case let .testView(moduleId): TestView(moduleId: moduleId)
-                    case let .testViewResult(questionId): TestViewResult(questionId: questionId)
+                    case let .testViewResult(correctAnswersCount): TestViewResult(correctAnswersCount: correctAnswersCount)
                 }
             }
         }
